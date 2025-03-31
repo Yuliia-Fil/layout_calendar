@@ -7,7 +7,7 @@ $start-days: (
   'sat': 5,
   'sun': 6,
 );
-$month-lenght: 31;
+$month-length: 31;
 
 body {
   margin: 0;
@@ -26,14 +26,22 @@ body {
   width: 726px;
 
   @each $day, $index in $start-days {
-    .calendar--start-day-#{$day} {
+    &.calendar--start-day-#{$day} {
       .calendar__day:first-child {
         margin-left: ($index * 101px);
       }
     }
   }
 
-  @for $n from 1 through $month-lenght {
+  @for $days from 29 through 31 {
+    &.calendar--month-length-#{$days} {
+      .calendar__day:nth-child(n + #{$days + 1}) {
+        display: none;
+      }
+    }
+  }
+
+  @for $n from 1 through $month-length {
     &__day:nth-child(#{$n}) {
       box-sizing: border-box;
       background-color: #eee;
@@ -43,14 +51,6 @@ body {
       display: flex;
       justify-content: center;
       align-items: center;
-
-      @for $days from 29 through 31 {
-        .calendar--month-length-#{$days} {
-          .calendar__day:nth-child(n + #{$days}) {
-            display: none;
-          }
-        }
-      }
 
       &::before {
         font-family: Arial, Helvetica, sans-serif;
